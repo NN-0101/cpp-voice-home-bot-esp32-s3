@@ -1,0 +1,57 @@
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+.clang_complete
+.gcc-flags.json
+
+# Build outputs
+build/
+*.bin
+*.elf
+*.map
+*.o
+*.d
+*.a
+*.so
+*.dylib
+
+# ESP-IDF
+sdkconfig
+sdkconfig.old
+
+# IDE - CLion / IntelliJ
+.idea/
+*.iml
+cmake-build-*/
+out/
+
+# IDE - VS Code
+.vscode/
+*.code-workspace
+
+# IDE - Eclipse
+.settings/
+.project
+.cproject
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Local configuration
+local_config.h
+private_config.h
