@@ -1,0 +1,73 @@
+# Build directories
+build/
+cmake-build-*/
+.cache/
+
+# IDE files
+.idea/
+.vscode/
+.DS_Store
+
+# ESP-IDF generated files
+sdkconfig
+sdkconfig.old
+sdkconfig.backup
+sdkconfig.ci
+sdkconfig.save
+
+# Dependencies managed by idf.py
+managed_components/
+components/
+dependencies.lock
+
+# Generated files
+*.bin
+*.elf
+*.map
+*.srec
+*.o
+*.a
+*.d
+*.flash
+*.args
+
+# Partition table
+partitions_*.csv.bin
+partition_table/
+
+# Bootloader
+bootloader/
+
+# Flashing and debugging
+*.log
+*.log.*
+
+# Temporary files
+*.swp
+*.swo
+*~
+*.bak
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+
+# C/C++ files
+*.out
+*.exe
+*.exe~
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# ESP-IDF submodule update
+esp-idf/
+
+# Project specific
+my_private_key.pem
+certificates/
