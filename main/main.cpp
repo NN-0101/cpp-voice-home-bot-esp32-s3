@@ -89,10 +89,15 @@ esp_err_t wakenet_init()
     ESP_LOGI(TAG, "找到模型: %s", model_name);
 
     // 获取唤醒词句柄
-    wakenet = (const esp_wn_iface_t *)esp_wn_handle_from_name(model_name);
+    wakenet = esp_wn_handle_from_name(model_name);
+    ESP_LOGI(TAG, "wakenet ptr: %p", wakenet);
     if (wakenet == NULL) {
         ESP_LOGE(TAG, "获取唤醒词句柄失败！");
         return ESP_FAIL;
+    }
+    if (wakenet) {
+        ESP_LOGI(TAG, "create func ptr: %p", wakenet->create);
+        ESP_LOGI(TAG, "detect func ptr: %p", wakenet->detect);
     }
 
     // 创建模型实例
@@ -183,5 +188,5 @@ extern "C" void app_main(void)
     }
 
     // 创建检测任务
-    xTaskCreate(detect_task, "detect_task", 8192, NULL, 5, NULL);
+    xTaskCreate(detect_task, "detect_task", 20480, NULL, 5, NULL);
 }
