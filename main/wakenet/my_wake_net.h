@@ -8,22 +8,22 @@
 #include "esp_err.h"
 #include "esp_wn_iface.h"
 
-class my_wakenet {
+class my_wake_net {
 public:
     /**
      * 构造函数
      */
-    my_wakenet();
+    my_wake_net();
 
     /**
      * 析构函数
      */
-    ~my_wakenet();
+    ~my_wake_net();
 
     // 禁用拷贝构造和赋值
-    my_wakenet(const my_wakenet &) = delete;
+    my_wake_net(const my_wake_net &) = delete;
 
-    my_wakenet &operator=(const my_wakenet &) = delete;
+    my_wake_net &operator=(const my_wake_net &) = delete;
 
     /**
      * @brief 初始化唤醒词引擎
@@ -46,19 +46,15 @@ public:
      * @brief 获取单次检测所需的音频采样点数
      * @return 采样点数量
     */
-    [[nodiscard]] int get_chunk_size() const { return audio_chunksize_; }
+    [[nodiscard]] int get_chunk_size() const { return audio_chunk_size_; }
 
-    /**
-     * @brief 销毁、反初始化唤醒词引擎
-     * @return ESP_OK 成功，其他失败
-     */
-    [[nodiscard]] esp_err_t destroy();
+
 
 private:
-    const esp_wn_iface_t *wakenet_; // 唤醒词接口
+    const esp_wn_iface_t *wake_net_; // 唤醒词接口
     model_iface_data_t *model_data_; // 模型实例数据
     char *model_name_; // 模型名称
-    int audio_chunksize_; // 音频块大小（采样点数）
+    int audio_chunk_size_; // 音频块大小（采样点数）
     bool is_initialized_; // 是否已初始化
 
     /**

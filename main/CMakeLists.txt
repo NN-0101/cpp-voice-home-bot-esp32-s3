@@ -64,7 +64,7 @@ idf_component_register(
         SRCS
             "main.cpp"                    # 编译主程序源文件
             "i2s/my_i2s.cpp"
-            "wakenet/my_wakenet.cpp"
+            "wakenet/my_wake_net.cpp"
         INCLUDE_DIRS "."                   # 当前目录加入头文件搜索路径
         # REQUIRES esp-sr                  # (可选) 公开依赖 ESP-SR 语音识别库
         # PRIV_REQUIRES driver freertos    # (可选) 私有依赖 I2S 驱动和 FreeRTOS

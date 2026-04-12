@@ -9,14 +9,14 @@
 
 // 自定义类
 #include "i2s/my_i2s.h"
-#include "wakenet/my_wakenet.h"
+#include "wakenet/my_wake_net.h"
 
 // ================= TAG =================
 static const char *TAG = "WAKE";
 
 // ================= 全局对象 =================
 static my_i2s i2s_mic;
-static my_wakenet wakenet;
+static my_wake_net wakenet;
 static int16_t *audio_buffer = nullptr;
 
 // ================= 语音检测任务 =================
