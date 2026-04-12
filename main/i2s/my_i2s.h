@@ -22,6 +22,7 @@ public:
 
     // 禁用拷贝构造和赋值
     my_i2s(const my_i2s &) = delete;
+
     my_i2s &operator=(const my_i2s &) = delete;
 
     /**
