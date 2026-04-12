@@ -20,6 +20,10 @@ public:
      */
     ~my_i2s();
 
+    // 禁用拷贝构造和赋值
+    my_i2s(const my_i2s &) = delete;
+    my_i2s &operator=(const my_i2s &) = delete;
+
     /**
      * @brief 初始化 I2S
      * @param sample_rate 采样率，默认 16000
@@ -65,11 +69,6 @@ private:
     int sck_pin_; // SCK 引脚
     int sd_pin_; // SD 引脚
     bool is_initialized_; // 是否已初始化
-
-    // 禁用拷贝构造和赋值
-    my_i2s(const my_i2s &) = delete;
-
-    my_i2s &operator=(const my_i2s &) = delete;
 };
 
 
