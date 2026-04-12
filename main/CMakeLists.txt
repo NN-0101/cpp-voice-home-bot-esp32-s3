@@ -38,7 +38,6 @@
 #    - 作用：指定链接脚本片段文件，用于控制代码/数据的段放置
 #    - 类型：字符串列表
 #    - 示例：LDFRAGMENTS "linker.lf"
-#    - 说明：高级功能，用于将特定函数/变量放入 IRAM、RTC 内存等特殊区域
 #
 # 📌 EMBED_FILES / EMBED_TXTFILES
 #    - 作用：将文件嵌入到固件中，运行时可通过文件系统 API 读取
@@ -65,6 +64,7 @@ idf_component_register(
             "main.cpp"                    # 编译主程序源文件
             "i2s/my_i2s.cpp"
             "wakenet/my_wake_net.cpp"
+            "wakenet/wake_detect_task.cpp"
         INCLUDE_DIRS "."                   # 当前目录加入头文件搜索路径
         # REQUIRES esp-sr                  # (可选) 公开依赖 ESP-SR 语音识别库
         # PRIV_REQUIRES driver freertos    # (可选) 私有依赖 I2S 驱动和 FreeRTOS

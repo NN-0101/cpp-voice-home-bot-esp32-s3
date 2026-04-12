@@ -11,12 +11,12 @@
 class my_wake_net {
 public:
     /**
-     * 构造函数
+     * @brief 构造函数
      */
     my_wake_net();
 
     /**
-     * 析构函数
+     * @brief 析构函数
      */
     ~my_wake_net();
 

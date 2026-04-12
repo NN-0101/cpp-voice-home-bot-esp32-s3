@@ -11,12 +11,12 @@
 class my_i2s {
 public:
     /**
-     * 构造函数
+     * @brief 构造函数
      */
     my_i2s();
 
     /**
-     * 析构函数
+     * @brief 析构函数
      */
     ~my_i2s();
 
