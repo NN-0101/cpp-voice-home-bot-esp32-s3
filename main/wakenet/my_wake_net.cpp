@@ -8,7 +8,7 @@
 #include "model_path.h"
 #include <cstring>
 
-static const char *TAG = "MY_WAKENET";
+static const char *TAG = "MY_WAKE_NET";
 
 my_wake_net::my_wake_net()
     : wake_net_(nullptr)
