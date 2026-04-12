@@ -77,8 +77,6 @@ extern "C" void app_main(void)
 
     ESP_LOGI(TAG, "系统初始化完成，等待唤醒...");
 
-    // 主循环可以做其他事情
-    while (1) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
+    // 删除主任务，释放资源
+    vTaskDelete(NULL);
 }
