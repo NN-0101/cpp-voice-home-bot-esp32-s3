@@ -17,7 +17,7 @@ sdkconfig.save
 
 # Dependencies managed by idf.py
 managed_components/
-components/
+#components/
 dependencies.lock
 
 # Generated files
