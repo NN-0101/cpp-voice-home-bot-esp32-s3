@@ -65,7 +65,10 @@ idf_component_register(
             "i2s/my_i2s.cpp"
             "wakenet/my_wake_net.cpp"
             "wakenet/wake_detect_task.cpp"
+            "audio/audio_player.cpp"
         INCLUDE_DIRS "."                   # 当前目录加入头文件搜索路径
+        EMBED_TXTFILES
+            "assets/hello1.wav"
         # REQUIRES esp-sr                  # (可选) 公开依赖 ESP-SR 语音识别库
         # PRIV_REQUIRES driver freertos    # (可选) 私有依赖 I2S 驱动和 FreeRTOS
 )
