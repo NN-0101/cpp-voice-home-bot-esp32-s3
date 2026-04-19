@@ -62,9 +62,9 @@
 idf_component_register(
         SRCS
             "main.cpp"                    # 编译主程序源文件
-            "i2s/my_i2s.cpp"
-            "wakenet/my_wake_net.cpp"
-            "wakenet/wake_detect_task.cpp"
+            "i2s_driver/i2s_driver.cpp"
+            "wake_detect/wake_net.cpp"
+            "wake_detect/wake_detect_task.cpp"
             "audio/audio_player.cpp"
         INCLUDE_DIRS "."                   # 当前目录加入头文件搜索路径
         EMBED_TXTFILES

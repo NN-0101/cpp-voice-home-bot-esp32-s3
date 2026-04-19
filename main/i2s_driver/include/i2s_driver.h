@@ -8,7 +8,7 @@
 #include "esp_err.h"
 #include "driver/i2s.h"
 
-class my_i2s {
+class i2s_driver {
 public:
     /**
      * @brief I2S 工作方向枚举
@@ -22,16 +22,16 @@ public:
      * @brief 构造函数
      * @param port I2S 端口号，默认 I2S_NUM_0
      */
-    explicit my_i2s(i2s_port_t port = I2S_NUM_0);
+    explicit i2s_driver(i2s_port_t port = I2S_NUM_0);
 
     /**
      * @brief 析构函数
      */
-    ~my_i2s();
+    ~i2s_driver();
 
     // 禁用拷贝构造和赋值
-    my_i2s(const my_i2s &) = delete;
-    my_i2s &operator=(const my_i2s &) = delete;
+    i2s_driver(const i2s_driver &) = delete;
+    i2s_driver &operator=(const i2s_driver &) = delete;
 
     /**
      * @brief 初始化 I2S

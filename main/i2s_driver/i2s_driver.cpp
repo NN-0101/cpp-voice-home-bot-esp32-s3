@@ -2,14 +2,14 @@
 // Created by 0101 on 2026/4/12.
 //
 
-#include "my_i2s.h"
+#include "include/i2s_driver.h"
 #include "esp_log.h"
 #include "esp_check.h"
 #include <cstring>
 
 static const char* TAG = "MY_I2S";
 
-my_i2s::my_i2s(i2s_port_t port)
+i2s_driver::i2s_driver(i2s_port_t port)
     : port_(port)
     , direction_(Direction::RX_ONLY)
     , sample_rate_(16000)
@@ -19,13 +19,13 @@ my_i2s::my_i2s(i2s_port_t port)
     , is_initialized_(false) {
 }
 
-my_i2s::~my_i2s() {
+i2s_driver::~i2s_driver() {
     if (is_initialized_) {
         destroy();
     }
 }
 
-esp_err_t my_i2s::init(Direction dir, uint32_t sample_rate, int ws_pin, int sck_pin, int sd_pin) {
+esp_err_t i2s_driver::init(Direction dir, uint32_t sample_rate, int ws_pin, int sck_pin, int sd_pin) {
     if (is_initialized_) {
         ESP_LOGW(TAG, "[I2S%d] Already initialized", port_);
         return ESP_OK;
@@ -106,7 +106,7 @@ esp_err_t my_i2s::init(Direction dir, uint32_t sample_rate, int ws_pin, int sck_
     return ESP_OK;
 }
 
-esp_err_t my_i2s::read(void *buffer, size_t size, size_t *bytes_read, uint32_t timeout_ms) {
+esp_err_t i2s_driver::read(void *buffer, size_t size, size_t *bytes_read, uint32_t timeout_ms) {
     if (!is_initialized_) {
         ESP_LOGE(TAG, "[I2S%d] Not initialized", port_);
         return ESP_ERR_INVALID_STATE;
@@ -126,7 +126,7 @@ esp_err_t my_i2s::read(void *buffer, size_t size, size_t *bytes_read, uint32_t t
     return i2s_read(port_, buffer, size, bytes_read, ticks);
 }
 
-esp_err_t my_i2s::write(const void *buffer, size_t size, size_t *bytes_written, uint32_t timeout_ms) {
+esp_err_t i2s_driver::write(const void *buffer, size_t size, size_t *bytes_written, uint32_t timeout_ms) {
     if (!is_initialized_) {
         ESP_LOGE(TAG, "[I2S%d] Not initialized", port_);
         return ESP_ERR_INVALID_STATE;
@@ -146,7 +146,7 @@ esp_err_t my_i2s::write(const void *buffer, size_t size, size_t *bytes_written, 
     return i2s_write(port_, buffer, size, bytes_written, ticks);
 }
 
-esp_err_t my_i2s::zero_dma_buffer() {
+esp_err_t i2s_driver::zero_dma_buffer() {
     if (!is_initialized_) {
         ESP_LOGE(TAG, "[I2S%d] Not initialized", port_);
         return ESP_ERR_INVALID_STATE;
@@ -160,7 +160,7 @@ esp_err_t my_i2s::zero_dma_buffer() {
     return i2s_zero_dma_buffer(port_);
 }
 
-esp_err_t my_i2s::destroy() {
+esp_err_t i2s_driver::destroy() {
     if (!is_initialized_) {
         return ESP_OK;
     }

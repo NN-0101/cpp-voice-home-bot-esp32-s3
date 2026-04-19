@@ -2,7 +2,7 @@
 // Created by 0101 on 2026/4/12.
 //
 
-#include "my_wake_net.h"
+#include "include/wake_net.h"
 #include "esp_log.h"
 #include "esp_wn_models.h"
 #include "model_path.h"
@@ -10,7 +10,7 @@
 
 static const char *TAG = "MY_WAKE_NET";
 
-my_wake_net::my_wake_net()
+wake_net::wake_net()
     : wake_net_(nullptr)
       , model_data_(nullptr)
       , model_name_(nullptr)
@@ -18,11 +18,11 @@ my_wake_net::my_wake_net()
       , is_initialized_(false) {
 }
 
-my_wake_net::~my_wake_net() {
+wake_net::~wake_net() {
     cleanup();
 }
 
-esp_err_t my_wake_net::init(const char *model_partition, const char *wake_word, det_mode_t det_mode) {
+esp_err_t wake_net::init(const char *model_partition, const char *wake_word, det_mode_t det_mode) {
     if (is_initialized_) {
         ESP_LOGW(TAG, "WakeNet 已经初始化");
         return ESP_OK;
@@ -70,7 +70,7 @@ esp_err_t my_wake_net::init(const char *model_partition, const char *wake_word, 
     return ESP_OK;
 }
 
-int my_wake_net::detect(const int16_t *audio_data) {
+int wake_net::detect(const int16_t *audio_data) {
     if (!is_initialized_) {
         ESP_LOGE(TAG, "WakeNet 未初始化");
         return -1;
@@ -84,7 +84,7 @@ int my_wake_net::detect(const int16_t *audio_data) {
     return wake_net_->detect(model_data_, const_cast<int16_t *>(audio_data));
 }
 
-void my_wake_net::cleanup() {
+void wake_net::cleanup() {
     if (model_data_ != nullptr && wake_net_ != nullptr) {
         wake_net_->destroy(model_data_);
         model_data_ = nullptr;

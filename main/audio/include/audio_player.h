@@ -4,7 +4,7 @@
 
 #include "esp_err.h"
 #include "freertos/FreeRTOS.h"
-#include "i2s/my_i2s.h"
+#include "../../i2s_driver/include/i2s_driver.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -61,7 +61,7 @@ private:
     audio_player();
     ~audio_player();
 
-    my_i2s i2s_tx_;
+    i2s_driver i2s_tx_;
     bool is_initialized_;
     bool is_playing_;
     uint8_t volume_;

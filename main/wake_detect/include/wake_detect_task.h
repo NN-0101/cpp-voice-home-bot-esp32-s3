@@ -8,8 +8,8 @@
 #include "esp_err.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "i2s/my_i2s.h"
-#include "wakenet/my_wake_net.h"
+#include "../../i2s_driver/include/i2s_driver.h"
+#include "wake_net.h"
 
 class wake_detect_task {
 public:
@@ -34,7 +34,7 @@ public:
      * @param wake_net WakeNet 实例指针
      * @return ESP_OK 成功，其他失败
     */
-    esp_err_t init(my_i2s *i2s, my_wake_net *wake_net);
+    esp_err_t init(i2s_driver *i2s, wake_net *wake_net);
 
     /**
      * @brief 启动检测任务
@@ -70,8 +70,8 @@ public:
     [[nodiscard]] int get_detect_count() const { return detect_count_; }
 
 private:
-    my_i2s *i2s_; // I2S 实例
-    my_wake_net *wake_net_; // WakeNet 实例
+    i2s_driver *i2s_; // I2S 实例
+    wake_net *wake_net_; // WakeNet 实例
     int16_t *audio_buffer_; // 音频缓冲区
     TaskHandle_t task_handle_; // 任务句柄
     bool should_stop_; // 停止标志

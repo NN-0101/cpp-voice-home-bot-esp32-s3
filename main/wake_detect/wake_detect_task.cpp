@@ -2,7 +2,7 @@
 // Created by 0101 on 2026/4/12.
 //
 
-#include "wake_detect_task.h"
+#include "include/wake_detect_task.h"
 #include "esp_log.h"
 #include <cstring>
 
@@ -24,7 +24,7 @@ wake_detect_task::~wake_detect_task() {
     cleanup();
 }
 
-esp_err_t wake_detect_task::init(my_i2s *i2s, my_wake_net *wake_net) {
+esp_err_t wake_detect_task::init(i2s_driver *i2s, wake_net *wake_net) {
     if (i2s == nullptr || wake_net == nullptr) {
         ESP_LOGE(TAG, "无效的参数");
         return ESP_ERR_INVALID_ARG;

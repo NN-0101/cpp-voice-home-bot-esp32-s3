@@ -8,22 +8,22 @@
 #include "esp_err.h"
 #include "esp_wn_iface.h"
 
-class my_wake_net {
+class wake_net {
 public:
     /**
      * @brief 构造函数
      */
-    my_wake_net();
+    wake_net();
 
     /**
      * @brief 析构函数
      */
-    ~my_wake_net();
+    ~wake_net();
 
     // 禁用拷贝构造和赋值
-    my_wake_net(const my_wake_net &) = delete;
+    wake_net(const wake_net &) = delete;
 
-    my_wake_net &operator=(const my_wake_net &) = delete;
+    wake_net &operator=(const wake_net &) = delete;
 
     /**
      * @brief 初始化唤醒词引擎

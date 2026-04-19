@@ -1,5 +1,5 @@
 // audio/audio_player.cpp
-#include "audio_player.h"
+#include "include/audio_player.h"
 #include "esp_log.h"
 #include "esp_check.h"
 #include "driver/gpio.h"
@@ -66,7 +66,7 @@ esp_err_t audio_player::init(uint32_t sample_rate, int bclk_pin, int lrc_pin, in
 
     // 使用 my_i2s 初始化 TX 模式
     // 注意参数顺序：Direction, sample_rate, ws_pin(lrc), sck_pin(bclk), sd_pin(din)
-    esp_err_t ret = i2s_tx_.init(my_i2s::Direction::TX_ONLY,
+    esp_err_t ret = i2s_tx_.init(i2s_driver::Direction::TX_ONLY,
                                   sample_rate,
                                   lrc_pin,    // ws_pin
                                   bclk_pin,   // sck_pin

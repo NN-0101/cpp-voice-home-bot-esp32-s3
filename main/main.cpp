@@ -4,16 +4,16 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-#include "i2s/my_i2s.h"
-#include "wakenet/my_wake_net.h"
-#include "wakenet/wake_detect_task.h"
-#include "audio/audio_player.h"
+#include "i2s_driver/include/i2s_driver.h"
+#include "wake_detect/include/wake_net.h"
+#include "wake_detect/include/wake_detect_task.h"
+#include "audio/include/audio_player.h"
 
 static const char *TAG = "MAIN";
 
 // 全局对象
-static my_i2s i2s_mic;
-static my_wake_net wakenet;
+static i2s_driver i2s_mic;
+static wake_net wakenet;
 static wake_detect_task wake_task;
 
 // 声明嵌入式 WAV 文件 - 使用 EMBED_TXTFILES 时的符号名称格式
@@ -45,7 +45,7 @@ extern "C" void app_main(void)
     ESP_LOGI(TAG, "Chip: ESP32-S3");
 
     // 1. 初始化麦克风 I2S（I2S_NUM_0）
-    if (i2s_mic.init(my_i2s::Direction::RX_ONLY, 16000, 13, 12, 14) != ESP_OK) {
+    if (i2s_mic.init(i2s_driver::Direction::RX_ONLY, 16000, 13, 12, 14) != ESP_OK) {
         ESP_LOGE(TAG, "I2S mic init failed, system halted");
         return;
     }
