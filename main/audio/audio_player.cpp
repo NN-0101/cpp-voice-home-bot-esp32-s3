@@ -40,9 +40,9 @@ audio_player::~audio_player() {
 
 void audio_player::build_volume_table() {
     for (int i = 0; i <= 100; i++) {
-        float factor = i / 100.0f;
+        float factor = static_cast<float>(i) / 100.0f;
         factor = factor * factor;
-        volume_table_[i] = static_cast<int16_t>(factor * 32767);
+        volume_table_[i] = static_cast<int16_t>(factor * 32767.0f);
     }
 }
 
@@ -162,7 +162,7 @@ esp_err_t audio_player::play(const uint8_t* wav_data, size_t wav_size) {
 
     const size_t chunk_samples = 1024;
     size_t buffer_size = chunk_samples * (header.bits_per_sample / 8);
-    uint8_t* buffer = static_cast<uint8_t*>(malloc(buffer_size));
+    auto* buffer = static_cast<uint8_t*>(malloc(buffer_size));
     if (!buffer) {
         ESP_LOGE(TAG, "Failed to allocate buffer");
         return ESP_ERR_NO_MEM;
@@ -202,8 +202,8 @@ esp_err_t audio_player::play(const uint8_t* wav_data, size_t wav_size) {
 }
 
 void audio_player::play_task(void* param) {
-    play_param_t* p = static_cast<play_param_t*>(param);
-    esp_err_t ret = audio_player::get_instance().play(p->wav_data, p->wav_size);
+    auto* p = static_cast<play_param_t*>(param);
+    esp_err_t ret = get_instance().play(p->wav_data, p->wav_size);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Async playback failed: %s", esp_err_to_name(ret));
     }
@@ -211,7 +211,7 @@ void audio_player::play_task(void* param) {
     vTaskDelete(nullptr);
 }
 
-esp_err_t audio_player::play_async(const uint8_t* wav_data, size_t wav_size) {
+esp_err_t audio_player::play_async(const uint8_t* wav_data, size_t wav_size) { // NOLINT
     if (!is_initialized_) {
         ESP_LOGE(TAG, "Audio player not initialized");
         return ESP_ERR_INVALID_STATE;
@@ -222,10 +222,7 @@ esp_err_t audio_player::play_async(const uint8_t* wav_data, size_t wav_size) {
         return ESP_ERR_INVALID_STATE;
     }
 
-    play_param_t* param = new play_param_t{wav_data, wav_size};
-    if (!param) {
-        return ESP_ERR_NO_MEM;
-    }
+    auto* param = new play_param_t{wav_data, wav_size};
 
     BaseType_t ret = xTaskCreate(play_task, "audio_play", 4096, param, 5, nullptr);
     if (ret != pdPASS) {

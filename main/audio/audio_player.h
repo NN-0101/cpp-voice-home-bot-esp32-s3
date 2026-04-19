@@ -69,7 +69,7 @@ private:
 
     void build_volume_table();
     void apply_volume(int16_t* buffer, size_t sample_count);
-    esp_err_t parse_wav_header(const uint8_t* data, size_t size,
+    static esp_err_t parse_wav_header(const uint8_t* data, size_t size,
                                wav_header_t* header, const uint8_t** pcm_data);
     static void play_task(void* param);
 };
