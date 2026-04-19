@@ -45,7 +45,7 @@ extern "C" void app_main(void)
     ESP_LOGI(TAG, "Chip: ESP32-S3");
 
     // 1. 初始化麦克风 I2S（I2S_NUM_0）
-    if (i2s_mic.init(16000, 13, 12, 14) != ESP_OK) {
+    if (i2s_mic.init(my_i2s::Direction::RX_ONLY, 16000, 13, 12, 14) != ESP_OK) {
         ESP_LOGE(TAG, "I2S mic init failed, system halted");
         return;
     }

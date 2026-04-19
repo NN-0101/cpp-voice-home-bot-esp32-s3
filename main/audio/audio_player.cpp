@@ -19,7 +19,7 @@ audio_player& audio_player::get_instance() {
 }
 
 audio_player::audio_player()
-    : tx_port_(I2S_NUM_1)
+    : i2s_tx_(I2S_NUM_1)
     , is_initialized_(false)
     , is_playing_(false)
     , volume_(70)
@@ -64,44 +64,15 @@ esp_err_t audio_player::init(uint32_t sample_rate, int bclk_pin, int lrc_pin, in
     ESP_LOGI(TAG, "  Sample rate: %lu Hz", sample_rate);
     ESP_LOGI(TAG, "  BCLK: GPIO %d, LRC: GPIO %d, DIN: GPIO %d", bclk_pin, lrc_pin, din_pin);
 
-    // I2S 配置（旧版驱动）
-    i2s_config_t i2s_config = {
-        .mode = static_cast<i2s_mode_t>(I2S_MODE_MASTER | I2S_MODE_TX),
-        .sample_rate = sample_rate,
-        .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
-        .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
-        .communication_format = I2S_COMM_FORMAT_STAND_I2S,
-        .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
-        .dma_desc_num = 8,
-        .dma_frame_num = 512,
-        .use_apll = false,
-        .tx_desc_auto_clear = true,
-        .fixed_mclk = 0,
-        .mclk_multiple = I2S_MCLK_MULTIPLE_256,
-        .bits_per_chan = I2S_BITS_PER_CHAN_DEFAULT,
-    };
-
-    // 引脚配置
-    i2s_pin_config_t pin_config = {
-        .mck_io_num = I2S_PIN_NO_CHANGE,
-        .bck_io_num = bclk_pin,
-        .ws_io_num = lrc_pin,
-        .data_out_num = din_pin,
-        .data_in_num = I2S_PIN_NO_CHANGE,
-    };
-
-    // 安装 I2S 驱动
-    esp_err_t ret = i2s_driver_install(tx_port_, &i2s_config, 0, nullptr);
+    // 使用 my_i2s 初始化 TX 模式
+    // 注意参数顺序：Direction, sample_rate, ws_pin(lrc), sck_pin(bclk), sd_pin(din)
+    esp_err_t ret = i2s_tx_.init(my_i2s::Direction::TX_ONLY,
+                                  sample_rate,
+                                  lrc_pin,    // ws_pin
+                                  bclk_pin,   // sck_pin
+                                  din_pin);   // sd_pin
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "I2S driver install failed: %s", esp_err_to_name(ret));
-        return ret;
-    }
-
-    // 设置引脚
-    ret = i2s_set_pin(tx_port_, &pin_config);
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "I2S pin set failed: %s", esp_err_to_name(ret));
-        i2s_driver_uninstall(tx_port_);
+        ESP_LOGE(TAG, "I2S TX init failed: %s", esp_err_to_name(ret));
         return ret;
     }
 
@@ -212,7 +183,7 @@ esp_err_t audio_player::play(const uint8_t* wav_data, size_t wav_size) {
             apply_volume(reinterpret_cast<int16_t*>(buffer), chunk / 2);
         }
 
-        ret = i2s_write(tx_port_, buffer, chunk, &bytes_written, portMAX_DELAY);
+        ret = i2s_tx_.write(buffer, chunk, &bytes_written, portMAX_DELAY);
         if (ret != ESP_OK) {
             ESP_LOGE(TAG, "I2S write failed: %s", esp_err_to_name(ret));
             break;
@@ -273,7 +244,7 @@ void audio_player::set_volume(uint8_t volume) {
 
 esp_err_t audio_player::deinit() {
     if (is_initialized_) {
-        i2s_driver_uninstall(tx_port_);
+        i2s_tx_.destroy();
         is_initialized_ = false;
         ESP_LOGI(TAG, "Audio player deinitialized");
     }

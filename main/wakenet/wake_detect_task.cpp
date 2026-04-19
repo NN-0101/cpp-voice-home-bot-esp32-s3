@@ -208,7 +208,7 @@ void wake_detect_task::run() {
             audio_buffer_,
             chunk_size * sizeof(int16_t),
             &bytes_read,
-            pdMS_TO_TICKS(100) // 100ms 超时
+            100 // 直接传毫秒，内部会转换为 Tick
         );
 
         if (ret != ESP_OK) {

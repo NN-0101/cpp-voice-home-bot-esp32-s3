@@ -3,9 +3,8 @@
 #define CPP_VOICE_HOME_BOT_ESP32_S3_AUDIO_PLAYER_H
 
 #include "esp_err.h"
-#include "driver/i2s.h"  // 改用旧版驱动
 #include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
+#include "i2s/my_i2s.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,7 +61,7 @@ private:
     audio_player();
     ~audio_player();
 
-    i2s_port_t tx_port_;              // I2S 端口号
+    my_i2s i2s_tx_;
     bool is_initialized_;
     bool is_playing_;
     uint8_t volume_;
