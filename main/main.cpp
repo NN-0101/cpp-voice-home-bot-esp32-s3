@@ -4,10 +4,10 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-#include "i2s_driver/include/i2s_driver.h"
+#include "i2s_driver/i2s_driver.h"
 #include "wake_detect/include/wake_net.h"
-#include "wake_detect/include/wake_detect_task.h"
-#include "audio/include/audio_player.h"
+#include "wake_detect/wake_detect_task.h"
+#include "audio/audio_player.h"
 
 static const char *TAG = "MAIN";
 

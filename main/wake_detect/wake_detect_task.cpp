@@ -2,7 +2,7 @@
 // Created by 0101 on 2026/4/12.
 //
 
-#include "include/wake_detect_task.h"
+#include "wake_detect_task.h"
 #include "esp_log.h"
 #include <cstring>
 

@@ -8,8 +8,8 @@
 #include "esp_err.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "../../i2s_driver/include/i2s_driver.h"
-#include "wake_net.h"
+#include "../i2s_driver/i2s_driver.h"
+#include "include/wake_net.h"
 
 class wake_detect_task {
 public:

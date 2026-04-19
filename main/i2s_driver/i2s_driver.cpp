@@ -2,7 +2,7 @@
 // Created by 0101 on 2026/4/12.
 //
 
-#include "include/i2s_driver.h"
+#include "i2s_driver.h"
 #include "esp_log.h"
 #include "esp_check.h"
 #include <cstring>

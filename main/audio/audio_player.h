@@ -6,7 +6,7 @@
 
 #include "esp_err.h"
 #include "freertos/FreeRTOS.h"
-#include "../../i2s_driver/include/i2s_driver.h"
+#include "../i2s_driver/i2s_driver.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -2,7 +2,7 @@
 // Created by 0101 on 2026/4/12.
 //
 
-#include "include/wake_net.h"
+#include "wake_net.h"
 #include "esp_log.h"
 #include "esp_wn_models.h"
 #include "model_path.h"
